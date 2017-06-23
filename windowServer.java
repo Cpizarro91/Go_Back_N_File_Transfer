@@ -7,7 +7,6 @@ public class windowServer { //server
     public static void main(String args[]) throws Exception {
         // Get the address, port and name of file to send over UDP
         final String hostName = "localhost";
-        //final int port = Integer.parseInt(args[1]);
         final int port = 2014;
         System.out.println("args: " + args[0]);
         final int RN = Integer.parseInt(args[0]);
@@ -63,7 +62,7 @@ public class windowServer { //server
         // Create the socket, set the address and create the file to be sent
         DatagramSocket socket = new DatagramSocket();
         InetAddress address = InetAddress.getByName(hostName);
-        File file = new File("/users/cassandrapizarro/documents/COMP430/" + fileName); //fileName	
+        File file = new File("directory where the file is" + fileName); //fileName	
 
         // Create a byte array to store the filestream
         InputStream inFromFile = new FileInputStream(file);
@@ -167,19 +166,10 @@ public class windowServer { //server
                             int resendThis = sequenceNumber-lastAckedSequenceNumber;
                             int loopCounter = 1;
                             for (int y=0; y != resendThis  ; y++) {
-                            	//System.out.println("sequenceNumber: " + sequenceNumber + " last Acked: " + lastAckedSequenceNumber);
                     
                                 byte[] resendMessage = new byte[1024];
                                 resendMessage = sentMessageList.get(y + lastAckedSequenceNumber);
                                 
-                                /*int resend = sequenceNumber-1; //im just trying to get this to show right packets being resent
-                                if(y%resendThis==0){
-                                    System.out.println("Sending packet #: " + resendThis);
-                                }
-                                else{
-                                //System.out.println("Resending1: Packet #: " + loopCounter); //this needs to be 1,2,3,4
-                                loopCounter++;
-                                }*/
                                 
                                 //resendClient++;
                                 DatagramPacket resendPacket = new DatagramPacket(resendMessage, resendMessage.length, address, port);
